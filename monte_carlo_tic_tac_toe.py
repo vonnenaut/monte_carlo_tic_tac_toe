@@ -81,8 +81,6 @@ def mc_trial(board, player):
         player = provided.switch_player(player)
         # update the game state
         game_state = board.check_win()
-    # print "\nFinal board state:\n", board
-    # print "mc_trial(): winner:", STATES[game_state]
 
 
 def traverse_grid(board, num_steps):
@@ -147,10 +145,6 @@ def get_max_score_index(board, choices_grid):
             if choices_grid[row][col] == max_score:
                 max_score_index = (row, col)
 
-    # print "scores_list:", scores_list
-    # print "max_score:", max_score
-    # print "max_score_indices", max_score_indices
-    # print "max_score_index", max_score_index
     return tuple(max_score_index)
 
 
@@ -162,14 +156,13 @@ def get_best_move(board, scores):
     # print "\n\nget_best_move(): calculating best move:\n"
     best_move = None
     available_moves = board.get_empty_squares()
-    # print "available_moves:", available_moves
+
     if len(available_moves) == 0:
         print "Error:  No more moves available"
         return None
     elif len(available_moves) == 1:
         return tuple(available_moves[0])
     
-    # print "scores:", scores
     choices = [[-99 for dummy_col in range(board.get_dim())
                 ] for dummy_row in range(board.get_dim())]
 
@@ -177,10 +170,8 @@ def get_best_move(board, scores):
     for index in available_moves:
         choices[index[0]][index[1]] = scores[index[0]][
             index[1]]  # take the associated scores
-    # print "board:\n", board
-    # print "choices:", choices
+
     best_move = get_max_score_index(board, choices)
-    # print "best_move:", best_move
     return tuple(best_move)
 
 
@@ -216,10 +207,7 @@ def mc_move(board, player, trials):
     return get_best_move(board, scores_grid)
 
 
-# # Test game with the console or the GUI.  Uncomment whichever
-# # you prefer.  Both should be commented out when you submit
-# # for testing to save time.
-
+# # Run the game with the console or the GUI.
 # # provided.play_game(mc_move, NTRIALS, False)
 # # poc_ttt_gui.run_gui(3, provided.PLAYERX, mc_move, NTRIALS, False)
 # # test = run_test_suite()
